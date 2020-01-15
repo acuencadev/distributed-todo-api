@@ -16,10 +16,7 @@ def create_app(settings_override=None):
         app.config.update(settings_override)
 
     register_extensions(app)
-
-    @app.route('/')
-    def index():
-        return "Hello World"
+    register_blueprints(app)
 
     return app
 
@@ -34,3 +31,16 @@ def register_extensions(app: Flask):
     from todo_api.extensions import db
 
     db.init_app(app)
+
+
+def register_blueprints(app: Flask):
+    """
+    Register all blueprints.
+
+    :param app: Flask application instance
+    :return: None
+    """
+    from todo_api.blueprints import admin, todos
+
+    app.register_blueprint(admin)
+    app.register_blueprint(todos)
