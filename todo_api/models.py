@@ -26,7 +26,7 @@ class User(db.Model):
 
     @unhashed_password.setter
     def unhashed_password(self, unhashed_password: str):
-        self.password = generate_password_hash(unhashed_password)
+        self.password = generate_password_hash(unhashed_password, method='sha256')
 
     def validate_password(self, unhashed_password: str) -> bool:
         return check_password_hash(self.password, unhashed_password)
