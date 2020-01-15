@@ -22,8 +22,6 @@ services:
       "todo_api.app:create_app()"
     environment:
       PYTHONUNBUFFERED: 'true'
-    env_file:
-      - flask_env.env
     volumes:
     - './todo_api'
     ports:
