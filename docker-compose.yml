@@ -13,4 +13,4 @@ services:
     volumes:
     - './todo_api'
     ports:
-    - '8000:80'
+    - '8000:8000'
