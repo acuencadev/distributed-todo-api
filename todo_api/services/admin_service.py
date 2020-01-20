@@ -24,6 +24,12 @@ def get_user_by_public_id(public_id: str) -> Optional[User]:
     return user
 
 
+def get_user_by_username(username: str) -> Optional[User]:
+    user = User.query.filter_by(username=username).first()
+
+    return user
+
+
 def update_user(public_id: str, username: str, admin: bool = False) -> Optional[User]:
     user = User.query.filter_by(public_id=public_id).first()
 
@@ -69,3 +75,12 @@ def delete_all_users() -> int:
     db.session.commit()
 
     return users_deleted
+
+
+def validate_user(username: str, password: str) -> Optional[str]:
+    user = get_user_by_username(username=username)
+
+    if not user or not user.validate_password(unhashed_password=password):
+        return None
+
+    return str(user.public_id)

@@ -8,7 +8,7 @@ admin: Blueprint = Blueprint('admin', __name__)
 
 @admin.route('/users', methods=['GET'])
 @token_required
-def get_all_users():
+def get_all_users(current_user):
     users = admin_service.get_all_users()
     users_data = []
 
@@ -28,7 +28,7 @@ def get_all_users():
 
 @admin.route('/users/<public_id>', methods=['GET'])
 @token_required
-def get_one_user(public_id):
+def get_one_user(current_user, public_id):
     user = admin_service.get_user_by_public_id(public_id)
 
     if not user:
@@ -47,7 +47,7 @@ def get_one_user(public_id):
 
 @admin.route('/users', methods=['POST'])
 @token_required
-def create_user():
+def create_user(current_user):
     data = request.get_json()
     new_user = admin_service.create_user(username=data['username'], unhashed_password=data['password'],
                                          admin=data['admin'])
@@ -68,7 +68,7 @@ def create_user():
 
 @admin.route('/users/<public_id>', methods=['PUT'])
 @token_required
-def update_user(public_id):
+def update_user(current_user, public_id):
     data = request.get_json()
 
     updated_user = admin_service.update_user(public_id=public_id, username=data.get('username', None),
@@ -82,7 +82,7 @@ def update_user(public_id):
 
 @admin.route('/users/<public_id>', methods=['PATCH'])
 @token_required
-def promote_user(public_id):
+def promote_user(current_user, public_id):
     promoted_user = admin_service.promote_user(public_id)
 
     if not promoted_user:
@@ -93,7 +93,7 @@ def promote_user(public_id):
 
 @admin.route('/users/<public_id>', methods=['DELETE'])
 @token_required
-def delete_user(public_id):
+def delete_user(current_user, public_id):
     deleted_user = admin_service.delete_user(public_id)
 
     if not deleted_user:
@@ -104,7 +104,7 @@ def delete_user(public_id):
 
 @admin.route('/users', methods=['DELETE'])
 @token_required
-def delete_all_users():
+def delete_all_users(current_user):
     users_deleted = admin_service.delete_all_users()
 
     return '', 204

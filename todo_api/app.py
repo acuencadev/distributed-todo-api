@@ -49,7 +49,8 @@ def register_blueprints(app: Flask):
     :param app: Flask application instance
     :return: None
     """
-    from todo_api.blueprints import admin, todos
+    from todo_api.blueprints import admin, auth, todos
 
     app.register_blueprint(admin)
+    app.register_blueprint(auth)
     app.register_blueprint(todos)
