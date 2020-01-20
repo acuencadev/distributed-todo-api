@@ -31,7 +31,7 @@ def get_user_by_username(username: str) -> Optional[User]:
 
 
 def update_user(public_id: str, username: str, admin: bool = False) -> Optional[User]:
-    user = User.query.filter_by(public_id=public_id).first()
+    user = get_user_by_public_id(public_id=public_id)
 
     if not user:
         return None
@@ -45,7 +45,7 @@ def update_user(public_id: str, username: str, admin: bool = False) -> Optional[
 
 
 def promote_user(public_id: str) -> Optional[User]:
-    user = User.query.filter_by(public_id=public_id).first()
+    user = get_user_by_public_id(public_id=public_id)
 
     if not user:
         return None
@@ -58,7 +58,7 @@ def promote_user(public_id: str) -> Optional[User]:
 
 
 def delete_user(public_id: str) -> bool:
-    user = User.query.filter_by(public_id=public_id).first()
+    user = get_user_by_public_id(public_id=public_id)
 
     if not user:
         return False
