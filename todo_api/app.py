@@ -1,24 +1,33 @@
 from flask import Flask
 
 
+__app = Flask(__name__, instance_relative_config=True)
+
+
 def create_app(settings_override=None):
     """
     Create a Flask application using the factory pattern
 
     :return: Flask application instance
     """
-    app = Flask(__name__, instance_relative_config=True)
+    global __app
 
-    app.config.from_object('config.settings')
-    app.config.from_pyfile('config.py', silent=True)
+    __app.config.from_object('config.settings')
+    __app.config.from_pyfile('config.py', silent=True)
 
     if settings_override:
-        app.config.update(settings_override)
+        __app.config.update(settings_override)
 
-    register_extensions(app)
-    register_blueprints(app)
+    register_extensions(__app)
+    register_blueprints(__app)
 
-    return app
+    return __app
+
+
+def get_app():
+    global __app
+
+    return __app
 
 
 def register_extensions(app: Flask):
