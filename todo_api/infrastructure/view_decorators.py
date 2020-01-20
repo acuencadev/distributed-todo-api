@@ -4,7 +4,7 @@ from functools import wraps
 from flask import request, jsonify
 
 from todo_api.app import get_app
-import todo_api.services.admin_service as admin_service
+import todo_api.services.user_service as user_service
 
 
 def token_required(f):
@@ -21,7 +21,7 @@ def token_required(f):
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = admin_service.get_user_by_public_id(public_id=data['public_id'])
+            current_user = user_service.get_user_by_public_id(public_id=data['public_id'])
         except:
             return jsonify({'message': "Token is invalid!"}, 401)
 

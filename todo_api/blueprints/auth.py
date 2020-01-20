@@ -4,7 +4,7 @@ import datetime
 from flask import Blueprint, request, jsonify, make_response
 
 from todo_api.app import get_app
-import todo_api.services.admin_service as admin_service
+import todo_api.services.user_service as user_service
 
 
 auth = Blueprint('auth', __name__)
@@ -17,12 +17,12 @@ def login():
     if not authorization or not authorization.username or not authorization.password:
         return make_response("Could not verify", 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
-    user = admin_service.get_user_by_username(authorization.username)
+    user = user_service.get_user_by_username(authorization.username)
 
     if not user:
         return make_response("Could not verify", 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
-    public_id = admin_service.validate_user(authorization.username, authorization.password)
+    public_id = user_service.validate_user(authorization.username, authorization.password)
 
     if public_id:
         app = get_app()
@@ -41,8 +41,8 @@ def login():
 @auth.route('/auth', methods=['POST'])
 def register():
     data = request.get_json()
-    new_user = admin_service.create_user(username=data['username'], unhashed_password=data['password'],
-                                         admin=data['admin'])
+    new_user = user_service.create_user(username=data['username'], unhashed_password=data['password'],
+                                        admin=data['admin'])
 
     if not new_user:
         return '', 400
