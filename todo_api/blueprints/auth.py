@@ -41,8 +41,7 @@ def login():
 @auth.route('/auth', methods=['POST'])
 def register():
     data = request.get_json()
-    new_user = user_service.create_user(username=data['username'], unhashed_password=data['password'],
-                                        admin=data['admin'])
+    new_user = user_service.create_user(username=data['username'], unhashed_password=data['password'])
 
     if not new_user:
         return '', 400
