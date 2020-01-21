@@ -1,7 +1,7 @@
 from flask import Flask
 
 
-__app = Flask(__name__, instance_relative_config=True)
+__app: Flask = Flask(__name__, instance_relative_config=True)
 
 
 def create_app(settings_override=None):

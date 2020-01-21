@@ -1,5 +1,8 @@
-FLASK_APP = "todo_api/app.py"
-FLASK_ENV = "development"
-SQLALCHEMY_DATABASE_URI = "postgresql://todo_api:P@ssw0rd@db:5432/todo_api"
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-SECRET_KEY = "b3b5e10524cee211ee84720b7c5e221a"
+import os
+
+
+FLASK_APP = os.getenv('FLASK_APP')
+FLASK_ENV = os.getenv('FLASK_ENV')
+SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
+SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
+SECRET_KEY = os.getenv('SECRET_KEY')

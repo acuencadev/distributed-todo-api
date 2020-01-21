@@ -15,5 +15,6 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . .
+RUN pip install --editable .
 
 CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "todo_api.app:create_app()"
