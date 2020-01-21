@@ -1,7 +1,7 @@
 from flask import Flask
 
 
-__app: Flask = Flask(__name__, instance_relative_config=True)
+__app: Flask = Flask(__name__)
 
 
 def create_app(settings_override=None):
@@ -12,8 +12,7 @@ def create_app(settings_override=None):
     """
     global __app
 
-    __app.config.from_object('config.settings')
-    __app.config.from_pyfile('config.py', silent=True)
+    __app.config.from_pyfile('settings.py')
 
     if settings_override:
         __app.config.update(settings_override)

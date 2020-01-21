@@ -24,6 +24,7 @@ docker-compose up --build
 * [Flask-SQLAlchemy](http://flask-sqlalchemy.palletsprojects.com/en/2.x/) -  extension for Flask that adds support for SQLAlchemy
 * [Click](https://click.palletsprojects.com/en/7.x/) - Python package for creating beautiful command line interfaces
 * [gunicorn](https://gunicorn.org/) - Python WSGI HTTP Server for UNIX
+* [python-dotenv](https://pypi.org/project/python-dotenv/) - Add .env support to your django/flask apps in development and deployments
 
 ## Contributing
 

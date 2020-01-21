@@ -16,7 +16,8 @@ services:
   api:
     build: .
     env_file:
-      - .pyenv
+      - .env
+      - .flask.env
     command: >
       gunicorn -b 0.0.0.0:8000
       --access-logfile -
