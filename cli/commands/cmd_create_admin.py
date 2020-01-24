@@ -14,7 +14,7 @@ def cli(username: str, password: str):
 
     :param username: User nickname
     :param password: User password
-    :return: Subprocess call result
+    :return: Whether or not the admin was created
     """
     app = create_app()
     app.app_context().push()
