@@ -23,8 +23,6 @@ services:
       --access-logfile -
       --reload
       "todo_api.app:create_app()"
-    environment:
-      PYTHONUNBUFFERED: 'true'
     volumes:
     - './todo_api'
     ports:
