@@ -1,13 +1,14 @@
 from flask import Blueprint, request, jsonify
 
 import todo_api.services.user_service as user_service
-from todo_api.infrastructure.view_decorators import token_required
+from todo_api.infrastructure.view_decorators import token_required, admin_permissions
 
 admin: Blueprint = Blueprint('admin', __name__)
 
 
 @admin.route('/users', methods=['GET'])
 @token_required
+@admin_permissions
 def get_all_users(current_user):
     users = user_service.get_all_users()
     users_data = []
@@ -28,6 +29,7 @@ def get_all_users(current_user):
 
 @admin.route('/users/<public_id>', methods=['GET'])
 @token_required
+@admin_permissions
 def get_one_user(current_user, public_id):
     user = user_service.get_user_by_public_id(public_id)
 
@@ -47,6 +49,7 @@ def get_one_user(current_user, public_id):
 
 @admin.route('/users', methods=['POST'])
 @token_required
+@admin_permissions
 def create_user(current_user):
     data = request.get_json()
     new_user = user_service.create_user(username=data['username'], unhashed_password=data['password'],
@@ -68,6 +71,7 @@ def create_user(current_user):
 
 @admin.route('/users/<public_id>', methods=['PUT'])
 @token_required
+@admin_permissions
 def update_user(current_user, public_id):
     data = request.get_json()
 
@@ -82,6 +86,7 @@ def update_user(current_user, public_id):
 
 @admin.route('/users/<public_id>', methods=['PATCH'])
 @token_required
+@admin_permissions
 def promote_user(current_user, public_id):
     promoted_user = user_service.promote_user(public_id)
 
@@ -93,6 +98,7 @@ def promote_user(current_user, public_id):
 
 @admin.route('/users/<public_id>', methods=['DELETE'])
 @token_required
+@admin_permissions
 def delete_user(current_user, public_id):
     deleted_user = user_service.delete_user(public_id)
 
@@ -104,6 +110,7 @@ def delete_user(current_user, public_id):
 
 @admin.route('/users', methods=['DELETE'])
 @token_required
+@admin_permissions
 def delete_all_users(current_user):
     users_deleted = user_service.delete_all_users()
 

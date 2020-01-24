@@ -28,3 +28,20 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
 
     return decorated
+
+
+def admin_permissions(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        app = get_app()
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, app.config['SECRET_KEY'])
+
+        current_user = user_service.get_user_by_public_id(public_id=data['public_id'])
+
+        if not current_user.admin:
+            return jsonify({'message': "Cannot access this route!"}, 401)
+
+        return f(*args, **kwargs)
+
+    return decorated
